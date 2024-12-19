@@ -1,0 +1,1325 @@
+<link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'header.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'search.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- if settings.predictive_search_enabled -%}
+  <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- endif -%}
+
+{%- if section.settings.menu_type_desktop == 'mega' -%}
+  <link rel="stylesheet" href="{{ 'component-mega-menu.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- endif -%}
+
+
+<style>
+  
+  header-drawer {
+    justify-self: start;
+    margin-left: -1.2rem;
+    flex: 1 0 0;
+}
+
+  {%- if section.settings.sticky_header_type == 'reduce-logo-size' -%}
+    .scrolled-past-header .header__heading-logo-wrapper {
+      width: 75%;
+    }
+  {%- endif -%}
+
+  {%- if section.settings.menu_type_desktop != "drawer" -%}
+    @media screen and (min-width: 1200px) {
+      header-drawer {
+        display: none;
+      }
+    }
+  {%- endif -%}
+  * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Suisse Int\'l, Helvetica Neue, Arial, Lucida Grande, sans-serif;
+}
+  .menu-drawer-container {
+    display: flex;
+  }
+  .list-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .list-menu--inline {
+    display: inline-flex;
+    flex-wrap: wrap;
+  }
+
+  summary.list-menu__item {
+    padding-right: 2.7rem;
+  }
+
+  .list-menu__item {
+    display: flex;
+    align-items: center;
+    line-height: calc(1 + 0.3 / var(--font-body-scale));
+  }
+
+  .list-menu__item--link {
+    text-decoration: none;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    line-height: calc(1 + 0.8 / var(--font-body-scale));
+  }
+
+  @media screen and (min-width: 750px) {
+    .list-menu__item--link {
+      padding-bottom: 0.5rem;
+      padding-top: 0.5rem;
+    }
+  }
+</style>
+
+{%- style -%}
+  .header {
+    padding: {{ section.settings.padding_top | times: 0.5 | round: 0 }}px 3rem {{ section.settings.padding_bottom | times: 0.5 | round: 0 }}px 3rem;
+  }
+  .header:hover{
+    background-color:#fff;
+  }
+  .header:hover li a{
+    color:#1c1b1b;
+  }
+  .header-wrapper--border-bottom{
+    border-bottom:none;
+  }
+  .section-header {
+    position: sticky; /* This is for fixing a Safari z-index issue. PR #2147 */
+    margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-header {
+      margin-bottom: {{ section.settings.margin_bottom }}px;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .header {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  @media screen and (max-width: 1305px){
+    .header:not(.drawer-menu).page-width{
+    }
+  }
+  .header-wrapper{
+    transition: background-color 0.3s ease;
+  }
+  .header li a{
+    color:white;
+    transition: color 0.3s ease;
+  }
+.header-left{
+  display:flex;
+  flex:1 0 0;
+}
+.header-right{
+  flex:1 0 0;
+}
+.header-right ul{
+  justify-content:end;
+}
+  .header-left ul,
+.header-right ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex: 1 0 0;
+}
+.header-left ul li,
+.header-right ul li {
+  /* position: relative; */
+  margin: 0 5px;
+}
+.header-left ul li a,
+.header-right ul li a {
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: bold;
+  /* color: white; */
+  display: inline-block;
+  padding: 5px 0;
+}
+.header-left .header-list-left {
+  margin: 0 20px;  
+  border-bottom:none;
+}
+@media screen and (max-width: 1305px){
+  .header-left .header-list-left {
+    margin: 0 15px;  
+}
+}
+@media screen and (max-width: 1253px){
+  .header-left .header-list-left {
+    margin: 0 9px;  
+  }
+}
+
+.header-left .header-list-left .header-list-items{
+  text-transform: uppercase;
+  position:relative;
+}
+.header-left .header-list-left .header-list-items::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: #1c1b1b;
+  transform: scaleX(0);
+  transform-origin: bottom left;
+  transition: transform 0.25s ease-out;
+}
+.header-left .header-list-left .header-list-items:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom right;
+}
+.header-left .header-list-left:hover .dropdown-list {
+  opacity: 1 !important;
+  visibility: visible !important;
+  border-top: 1px solid #000000;
+}
+.header-left-mobile{
+    width:30px;
+    display:none;
+  }
+@media screen and (max-width: 1200px) {
+  .header-left ul{
+    display: none;
+  }
+.header-left-mobile{
+  display:block
+  }
+}
+  .header .header-right a {
+  padding: 0 10px;
+    cursor:pointer;
+}
+.header-right{
+  display: flex;
+  justify-self: end;
+}
+  .header-center{
+      display:flex;
+    justify-content:space-between;
+  }
+  .header-right-icon{
+    justify-content:end;
+    flex:1 0 0;
+  }
+    @media screen and (min-width: 1200px) {
+  .header-right-icon{
+        display: none;
+  }
+      
+  }
+    @media screen and (max-width: 1200px) {
+  
+  .header-right{
+        display:none;
+      }
+    }
+    #overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+{%- endstyle -%}
+
+<script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  for block in section.blocks
+    if block.type == '@app'
+      assign has_app_block = true
+    endif
+  endfor
+-%}
+
+<{% if section.settings.sticky_header_type != 'none' %}sticky-header data-sticky-type="always"{% else %}div{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
+  {%- liquid
+    assign social_links = false
+    assign localization_forms = false
+
+    if settings.social_twitter_link != blank or settings.social_facebook_link != blank or settings.social_pinterest_link != blank or settings.social_instagram_link != blank or settings.social_youtube_link != blank or settings.social_vimeo_link != blank or settings.social_tiktok_link != blank or settings.social_tumblr_link != blank or settings.social_snapchat_link != blank
+      assign social_links = true
+    endif
+
+    if localization.available_countries.size > 1 and section.settings.enable_country_selector or section.settings.enable_language_selector and localization.available_languages.size > 1
+      assign localization_forms = true
+    endif
+  -%}
+  <div id="overlay"></div>
+  <header class="header header-center header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if localization_forms %} header--has-localizations{% endif %}">
+      <!-- {%- liquid
+      if section.settings.menu != blank
+        if section.settings.menu_type_desktop == 'dropdown'
+          render 'header-dropdown-menu'
+        elsif section.settings.menu_type_desktop != 'drawer'
+          render 'header-mega-menu'
+        endif
+      endif
+    %} -->
+
+    <div class="header-left">
+      <ul>
+          <li class="header-list-left">
+              <a class="header-list-items" href>Bundles</a>
+              <div class="dropdown-list">
+                  <div class="dropdown-content">
+                      <div class="megamenu-list">
+                          <div class="megamenu-item">
+                              <a class="megamenu-item-title" href>Mens Bundles</a>
+                              <ul class="linklist">
+                                  <li><a href>2 for $150 Shirts & Shorts</a></li>
+                                  <li><a href>2 for $99 Volleys</a></li>
+                                  <li><a href>2 for $120 Swim</a></li>
+                                  <li><a href>2 for $80 Varsity & Mac Tees</a></li>
+                                  <li><a href>2 for $60 Roth & Jimmy Tees</a></li>
+                                  <li><a href>2 for $50 Basic Tees</a></li>
+                              </ul>
+                          </div>
+                          <div class="megamenu-item">
+                              <a class="megamenu-item-title" href="#">Womens Bundles</a>
+                              <ul class="linklist">
+                                  <li><a href="#">2 for $150 Shirts & Shorts</a></li>
+                                  <li><a href="#">2 for $60 Tees & Tanks</a></li>
+                                  <li><a href="#">2 for $80 Long Sleeve Tops</a></li>
+                              </ul>
+                          </div>
+                          <div class="megamenu-item">
+                              <a class="megamenu-item-title" href="#">Kids Bundles</a>
+                              <ul class="linklist">
+                                  <li><a href="#">2 for $99 Shirts & Shorts</a></li>
+                                  <li><a href="#">2 for $30 Basic Tees</a></li>
+                                  <li><a href="#">2 for $80 Sweats</a></li>
+                              </ul>
+                          </div>
+                      </div>
+                      <div class="megamenu-img">
+                              <div class="megamenu-img-content">
+                                  <img
+                                      src="https://academybrand.com/cdn/shop/files/ChristmasMenu_MensShirt_Short_370x230@2x.jpg?v=1733804925">
+                                  <b>Mens outfitting for $150</b>
+                              </div>
+                              <div class="megamenu-img-content">
+                                  <img
+                                      src="https://academybrand.com/cdn/shop/files/ChristmasMenu_WomensShirt_Short_370x230@2x.jpg?v=1733804925">
+                                  <b>Womens outfitting for $150</b>
+                              </div>
+                          </div>
+                  </div>
+              </div>
+          </li>
+          <li class="header-list-left">
+              <a class="header-list-items" href>MENS</a>
+              <div class="dropdown-list">
+                  <div class="dropdown-content">
+                      <div class="megamenu-list">
+                          <div class="megamenu-item">
+                              <a class="megamenu-item-title" href="#">Edits</a>
+                              <ul class="linklist">
+                                  <li><a href="#">Gifts For Him</a></li>
+                                  <li><a href="#">Event Outfitting</a></li>
+                                  <li><a href="#">Mini-Me Edit</a></li>
+                                  <li><a href="#">The Holiday Edit</a></li>
+                                  <li><a href="#">Spring Knits</a></li>
+                                  <li><a href="#">Colours Of Spring</a></li>
+                                  <li><a href="#">Best Of Linen</a></li>
+                                  <li><a href="#">Academy Icons</a></li>
+                              </ul>
+                          </div>
+  
+                          <div class="megamenu-item">
+                              <a class="megamenu-item-title" href="#">Clothing</a>
+                              <ul class="linklist">
+                                  <li><a href="#">View All</a></li>
+                                  <li><a href="#">New Arrivals</a></li>
+                                  <li><a href="#">Shorts</a></li>
+                                  <li><a href="#">Pants & Chinos</a></li>
+                                  <li><a href="#">Swim</a></li>
+                                  <li><a href="#">Tops & Tees</a></li>
+                                  <li><a href="#">Knit Shirts</a></li>
+                                  <li><a href="#">Short Sleeve Shirts</a></li>
+                                  <li><a href="#">Long Sleeve Shirts</a></li>
+                                  <li><a href="#">Polo Shirts</a></li>
+                                  <li><a href="#">Long Sleeve Tops</a></li>
+                                  <li><a href="#">Jackets & Outerwear</a></li>
+                                  <li><a href="#">Overshirts</a></li>
+                                  <li><a href="#">Sweats</a></li>
+                                  <li><a href="#">Knitwear</a></li>
+                                  <li><a href="#">Accessories</a></li>
+                                  <li><a href="#">Sale</a></li>
+                              </ul>
+                          </div>
+                          
+                      </div>
+                      <div class="megamenu-img">
+                        <div class="megamenu-img-content">
+                            <img
+                                src="https://academybrand.com/cdn/shop/files/ChristmasMenu_MensShirt_Short_370x230@2x.jpg?v=1733804925">
+                            <b>SHIRT + SHORT FOR $150</b>
+                        </div>
+                        <div class="megamenu-img-content">
+                            <img
+                                src="https://academybrand.com/cdn/shop/files/ChristmasMenu_GiftsForHimjpg_370x230@2x.jpg?v=1733804925">
+                            <b>Gifts for him</b>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+          </li>
+          <li class="header-list-left">
+              <a class="header-list-items" href>Womens</a>
+              <div class="dropdown-list">
+                  <div class="dropdown-content">
+                      <div class="megamenu-list">
+                          <div class="megamenu-item">
+                              <a class="megamenu-item-title" href>EDITS</a>
+                              <ul class="linklist">
+                                  <li><a href>The Holiday
+                                          Edit</a></li>
+                                  <li><a href>Colours Of
+                                          Spring</a></li>
+                                  <li><a href>Best Of
+                                          Linen</a></li>
+                                  <li><a href>Spring
+                                          Textures</a></li>
+                                  <li><a href>Academy
+                                          Icons</a></li>
+                              </ul>
+                          </div>
+                          <div class="megamenu-item">
+                              <a class="megamenu-item-title" href>CLOTHING</a>
+                              <ul class="linklist">
+                                  <li><a href>View
+                                          All</a></li>
+                                  <li><a href>Shorts</a></li>
+                                  <li><a href>Long Sleeve
+                                          Shirts</a></li>
+                                  <li><a href>Short Sleeve
+                                          Shirts</a></li>
+                                  <li><a href>Polo
+                                          Shirts</a></li>
+                                  <li><a href>Tops &
+                                          Tees</a></li>
+                                  <li><a href>Swim</a></li>
+                                  <li><a href>Pants &
+                                          Chinos</a></li>
+                                  <li><a href>Long Sleeve
+                                          Tops</a></li>
+                                  <li><a href>Sweats</a></li>
+                                  <li><a href>Jackets &
+                                          Outerwear</a></li>
+                                  <li><a href>Knitwear</a></li>
+                                  <li><a href>Accessories</a></li>
+                                  <li><a href>Sale</a></li>
+                              </ul>
+                          </div>
+                          
+                      </div>
+                      <div class="megamenu-img">
+                              <div class="megamenu-img-content">
+                                  <img
+                                      src="https://academybrand.com/cdn/shop/files/ChristmasMenu_WomensShirt_Short_370x230@2x.jpg?v=1733804925">
+                                  <b>Shirt + short for $150</b>
+                              </div>
+                              <div class="megamenu-img-content">
+                                  <img
+                                      src="https://academybrand.com/cdn/shop/files/ChristmasMenu_GiftsForHer_370x230@2x.jpg?v=1733804925">
+                                  <b>gifts for her</b>
+                              </div>
+                          </div>
+                  </div>
+              </div>
+          </li>
+          <li class="header-list-left">
+              <a class="header-list-items" href>Kids</a>
+              <div class="dropdown-list">
+                  <div class="dropdown-content">
+                      <div class="megamenu-list">
+                        <div class="megamenu-item">
+                          <a class="megamenu-item-title" href="#">Academy Kids</a>
+                          <ul class="linklist">
+                              <li><a href="#">View All</a></li>
+                              <li><a href="#">New Arrivals</a></li>
+                              <li><a href="#">Matching Outfits</a></li>
+                              <li><a href="#">Shorts</a></li>
+                              <li><a href="#">Pants</a></li>
+                              <li><a href="#">Swim</a></li>
+                              <li><a href="#">Tees</a></li>
+                              <li><a href="#">Shirts</a></li>
+                              <li><a href="#">Tops</a></li>
+                              <li><a href="#">Sweats</a></li>
+                              <li><a href="#">Jackets</a></li>
+                              <li><a href="#">Sale</a></li>
+                          </ul>
+                      </div>
+                      </div>
+                      <div class="megamenu-img">
+                              <div class="megamenu-img-content">
+                                  <img
+                                      src="https://academybrand.com/cdn/shop/files/ChristmasMenu_RookieShirt_Short_370x230@2x.jpg?v=1733804925">
+                                  <b>shirt + short for $99</b>
+                              </div>
+                              <div class="megamenu-img-content">
+                                  <img
+                                      src="https://academybrand.com/cdn/shop/files/ChristmasMenu_GiftsForRookies_370x230@2x.jpg?v=1733804925">
+                                  <b>Gifts for kids</b>
+                              </div>
+                          </div>
+                  </div>
+              </div>
+          </li>
+          <li class="header-list-left">
+              <a class="header-list-items" href>Gift Guide</a>
+              <div class="dropdown-list">
+                  <div class="dropdown-content">
+                      <div class="megamenu-list">
+                        <div class="megamenu-item">
+                          <a class="megamenu-item-title" href="#">Gifts</a>
+                          <ul class="linklist">
+                              <li><a href="#">View All</a></li>
+                              <li><a href="#">Gifts for Him</a></li>
+                              <li><a href="#">Gifts for Her</a></li>
+                              <li><a href="#">Gifts for Rookie</a></li>
+                              <li><a href="#">Gift Cards</a></li>
+                          </ul>
+                      </div>
+                      <div class="megamenu-item">
+                        <a class="megamenu-item-title" href="#">Accessories</a>
+                        <ul class="linklist">
+                            <li><a href="#">Bags</a></li>
+                            <li><a href="#">Beach Towels</a></li>
+                            <li><a href="#">Belts</a></li>
+                            <li><a href="#">Bottles</a></li>
+                            <li><a href="#">Candles</a></li>
+                            <li><a href="#">Hats</a></li>
+                            <li><a href="#">Mr Voss Collection</a></li>
+                            <li><a href="#">Skincare</a></li>
+                            <li><a href="#">Socks</a></li>
+                            <li><a href="#">Sunglasses</a></li>
+                            <li><a href="#">Underwear</a></li>
+                        </ul>
+                    </div>
+                          
+                      </div>
+                      <div class="megamenu-img">
+                              <div class="megamenu-img-content">
+                                  <img
+                                      src="https://academybrand.com/cdn/shop/files/ChristmasMenu_Accessories_370x230@2x.jpg?v=1733804925">
+                                  <b>Stocking stuffers</b>
+                              </div>
+                              <div class="megamenu-img-content">
+                                  <img
+                                      src="https://academybrand.com/cdn/shop/files/ChristmasMenu_GiftCards_370x230@2x.jpg?v=1733804925">
+                                  <b>It’s The Card That Counts</b>
+                              </div>
+                          </div>
+                  </div>
+              </div>
+          </li>
+      </ul>
+        <span class="header-left-mobile">
+          {{ 'icon-hamburger.svg' | inline_asset_content }}
+        </span>
+  </div>
+  <div class="formsearch">
+    <div class="search-inner">
+        <div class="search-searchbar">
+            <form class="search-form">
+                <div class="search-box">
+                    <div class="search-icon">
+                        <svg width="24px" height="24px"
+                            viewBox="0 0 24 24"
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <defs></defs>
+                            <g id="Icon/Desktop/Search"
+                                stroke="currentColor"
+                                stroke-width="1" fill="none"
+                                fill-rule="evenodd">
+                                <g
+                                    transform="translate(2.000000, 2.000000)"
+                                    stroke="currentColor"
+                                    class="stroke-color"
+                                    stroke-width="2">
+                                    <path
+                                        d="M8,14.9987 C12.1457079,14.9987 15.5,11.7494194 15.5,7.74986666 C15.5,3.74942967 12.1458629,0.5 8,0.5 C3.85413706,0.5 0.5,3.74942967 0.5,7.74986666 C0.5,11.7494194 3.85429207,14.9987 8,14.9987 Z"
+                                        id="Stroke-1"></path>
+                                    <path
+                                        d="M13.4644,13.4407 L19.4974,19.4737"
+                                        id="Stroke-3"
+                                        stroke-linecap="square"></path>
+                                </g>
+                            </g>
+                        </svg>
+                    </div>
+                    <input class="search-input" autofocus
+                        placeholder="Search....">
+                    <div class="search-close">
+                        <svg class="Icon Icon--close "
+                            role="presentation"
+                            viewBox="0 0 16 14">
+                            <path d="M15 0L1 14m14 0L1 0"
+                                stroke="currentColor"
+                                fill="none"
+                                fill-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                </div>
+                    <div class="search-dropdown">
+                        <div class="dropdown-trending">
+                            <div class="dropdown-trending-title">
+                                <h4>Popular Searches</h4>
+                            </div>
+                            <div class="dropdown-options">
+                                <div class="dropdown-option">
+                                    <a href>Jackets</a>
+                                </div>
+                                <div class="dropdown-option">
+                                    <a href>Linen</a>
+                                </div>
+                                <div class="dropdown-option">
+                                    <a href>Linen Shirt</a>
+                                </div>
+                                <div class="dropdown-option">
+                                    <a href>Volley Short</a>
+                                </div>
+                                <div class="dropdown-option">
+                                    <a href>Quarter Zip</a>
+                                </div>
+                                <div class="dropdown-option">
+                                    <a href>Hoodie</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-category">
+                            <div class="dropdown-category-items">
+                                <div class="dropdown-category-item">
+                                    <h4 class="dropdown-category-title">
+                                        Gender
+                                    </h4>
+                                    <ul>
+                                        <li><div class="dropdown-option"><a>Academy Brand</a></div></li>
+                                        <li><div class="dropdown-option"><a>Academy Women</a></div></li>
+                                        <li><div class="dropdown-option"><a>Academy Kids</a></div></li>
+                                    </ul>
+                                </div>
+                                <div class="dropdown-category-item">
+                                    <h4 class="dropdown-category-title">
+                                        Colour
+                                    </h4>
+                                    <ul>
+                                      <li>
+                                        <div class="dropdown-option"><a>Blue</a></div>
+                                      </li>
+                                      <li>
+                                        <div class="dropdown-option"><a>Green</a></div>
+                                      </li>
+                                      <li>
+                                        <div class="dropdown-option"><a>Neutrals</a></div>
+                                      </li>
+                                      <li>
+                                        <div class="dropdown-option"><a>Pink</a></div>
+                                      </li>
+                                      <li>
+                                        <div class="dropdown-option"><a>White</a></div>
+                                      </li>
+                                    </ul>
+                                </div>
+                                <div class="dropdown-category-item">
+                                    <h4 class="dropdown-category-title">
+                                        Product Type
+                                    </h4>
+                                    <ul>
+                                      <li>
+                                        <div class="dropdown-option"><a>Shorts</a></div>
+                                      </li>
+                                      <li>
+                                        <div class="dropdown-option"><a>Shirt L/S</a></div>
+                                      </li>
+                                      <li>
+                                        <div class="dropdown-option"><a>Shirt S/S</a></div>
+                                      </li>
+                                      <li>
+                                        <div class="dropdown-option"><a>Pants</a></div>
+                                      </li>
+                                      <li>
+                                        <div class="dropdown-option"><a>Dress</a></div>
+                                      </li>
+                                      
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-content">
+                            <div class="dropdown-content-info">
+                                <a>See 122 results for "jackets"</a>
+                                <span
+                                    class="dropdown-content-icon"><svg
+                                        viewBox="0 0 56 56"
+                                        style="width: 14px;height: 14px;"
+                                        xmlns="http://www.w3.org/2000/svg"><path
+                                            d="M45.34 29.564l-25.785 25.785c-0.869 0.869-2.259 0.869-3.128 0l-5.768-5.768c-0.869-0.869-0.869-2.259 0-3.128l18.452-18.452-18.452-18.452c-0.869-0.869-0.869-2.259 0-3.128l5.768-5.768c0.869-0.869 2.259-0.869 3.128 0l25.785 25.785c0.869 0.869 0.869 2.259 0 3.128z"></path></svg></span>
+                            </div>
+                            <div class="dropdown-content-title">
+                                <h4>Product Suggestions</h4>
+                            </div>
+                            <div
+                                class="dropdown-content-results swiper">
+                                <div class="swiper-wrapper">
+                                    <div
+                                        class="content-result swiper-slide">    
+                                        <img
+                                            src="https://cdn.shopify.com/s/files/1/0004/3686/3040/files/QuincyJacket-AlmondTan_600x600.jpg?v=1710987482">
+                                        <div class="result-details">
+                                            <div
+                                                class="result-details-title">Quince
+                                                Jacket</div>
+                                            <div
+                                                class="product-item-price">$169.95</div>
+
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="content-result swiper-slide">
+                                        <img
+                                            src="https://cdn.shopify.com/s/files/1/0004/3686/3040/files/QuincyJacket-AlmondTan_600x600.jpg?v=1710987482">
+                                        <div class="result-details">
+                                            <div
+                                                class="result-details-title">Quince
+                                                Jacket</div>
+                                            <div
+                                                class="product-item-price">$169.95</div>
+
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="content-result swiper-slide">
+                                        <img
+                                            src="https://cdn.shopify.com/s/files/1/0004/3686/3040/files/QuincyJacket-AlmondTan_600x600.jpg?v=1710987482">
+                                        <div class="result-details">
+                                            <div
+                                                class="result-details-title">Quince
+                                                Jacket</div>
+                                            <div
+                                                class="product-item-price">$169.95</div>
+
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="content-result swiper-slide">
+                                        <img
+                                            src="https://cdn.shopify.com/s/files/1/0004/3686/3040/files/QuincyJacket-AlmondTan_600x600.jpg?v=1710987482">
+                                        <div class="result-details">
+                                            <div
+                                                class="result-details-title">Quince
+                                                Jacket</div>
+                                            <div
+                                                class="product-item-price">$169.95</div>
+
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="content-result swiper-slide">
+                                        <img
+                                            src="https://cdn.shopify.com/s/files/1/0004/3686/3040/files/QuincyJacket-AlmondTan_600x600.jpg?v=1710987482">
+                                        <div class="result-details">
+                                            <div
+                                                class="result-details-title">Quince
+                                                Jacket</div>
+                                            <div
+                                                class="product-item-price">$169.95</div>
+
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="content-result swiper-slide">
+                                        <img
+                                            src="https://cdn.shopify.com/s/files/1/0004/3686/3040/files/QuincyJacket-AlmondTan_600x600.jpg?v=1710987482">
+                                        <div class="result-details">
+                                            <div
+                                                class="result-details-title">Quince
+                                                Jacket</div>
+                                            <div
+                                                class="product-item-price">$169.95</div>
+
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="content-result swiper-slide">
+                                        <img
+                                            src="https://cdn.shopify.com/s/files/1/0004/3686/3040/files/QuincyJacket-AlmondTan_600x600.jpg?v=1710987482">
+                                        <div class="result-details">
+                                            <div
+                                                class="result-details-title">Quince
+                                                Jacket</div>
+                                            <div
+                                                class="product-item-price">$169.95</div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="content-result swiper-slide">
+                                        <img
+                                            src="https://cdn.shopify.com/s/files/1/0004/3686/3040/files/QuincyJacket-AlmondTan_600x600.jpg?v=1710987482">
+                                        <div class="result-details">
+                                            <div
+                                                class="result-details-title">Quince
+                                                Jacket</div>
+                                            <div
+                                                class="product-item-price">$169.95</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+      {%- if section.settings.logo_position == 'top-center' or section.settings.menu == blank %}
+        {%- render 'header-search', input_id: 'Search-In-Modal-1' %}
+      {%- endif %}
+
+
+    {%- if section.settings.logo_position != 'middle-center' -%}
+      {%- if request.page_type == 'index' -%}
+        <h1 class="header__heading">
+      {%- endif -%}
+          <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
+            {%- if settings.logo != blank -%}
+              <div class="header__heading-logo-wrapper">
+                <img src="//academybrand.com/cdn/shop/files/TAB_Logo_Stacked_White_160x.png?v=1649580544" alt="{{ shop.name }}" class="header__heading-logo logo-default" width="160" height="auto" />
+                <img src="//academybrand.com/cdn/shop/files/TAB_Logo_Stacked_Black_160x.png?v=1649579160" alt="{{ shop.name }}" class="header__heading-logo logo-sticky" style="display: none;" width="160" height="auto" />
+                {% comment %} {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+                {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+                {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
+               {% capture widths %}160, 160, 160{% endcapture %}
+                {{ settings.logo | image_url: width: 600 | image_tag:
+                  class: 'header__heading-logo motion-reduce',
+                  widths: widths,
+                  height: logo_height,
+                  width: "160px",
+                  alt: logo_alt,
+                  sizes: sizes,
+                  preload: true
+                }} {% endcomment %}
+              </div>
+            {%- else -%}
+              <span class="h2">{{ shop.name }}</span>
+            {%- endif -%}
+          </a>
+      {%- if request.page_type == 'index' -%}
+        </h1>
+      {%- endif -%}
+    {%- endif -%}
+
+  
+
+    {%- if section.settings.logo_position == 'middle-center' -%}
+      {%- if request.page_type == 'index' -%}
+        <h1 class="header__heading">
+      {%- endif -%}
+          <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
+            <div class="header__heading-logo-wrapper">
+              <img src="{{ settings.logo_1 | img_url: '160x' }}" alt="{{ shop.name }}" class="header__heading-logo logo-default" width="160" height="auto" />
+              
+              <img src="{{ settings.logo_2 | img_url: '160x' }}" alt="{{ shop.name }}" class="header__heading-logo logo-sticky" width="160" height="auto" />
+            </div>
+            {% comment %} {%- if settings.logo != blank -%}
+              <div class="header__heading-logo-wrapper">
+                {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
+                {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
+                {% capture sizes %}(min-width: 750px) {{ settings.logo_width }}px, 50vw{% endcapture %}
+                {% capture widths %}{{ settings.logo_width }}, {{ settings.logo_width | times: 1.5 | round }}, {{ settings.logo_width | times: 2 }}{% endcapture %}
+                {{ settings.logo | image_url: width: 600 | image_tag:
+                  class: 'header__heading-logo',
+                  widths: widths,
+                  height: logo_height,
+                  width: settings.logo_width,
+                  alt: logo_alt,
+                  sizes: sizes,
+                  preload: true
+                }}
+              </div>
+            {%- else -%}
+              <span class="h2">{{ shop.name }}</span>
+            {%- endif -%} {% endcomment %}
+          </a>
+      {%- if request.page_type == 'index' -%}
+        </h1>
+      {%- endif -%}
+    {%- endif -%}
+  <div class="header-right">
+                    <ul>
+                        <li><a class="search">SEARCH</a></li>
+                        <li><a>STORES</a></li>
+                        <li><a>ACCOUNT</a></li>
+                        <li><a>REWARDS</a></li>
+                        <li><a>WISHLIST</a></li>
+                        <li><a class="header-cart">CART(1)</a></li>
+                    </ul>
+                </div>
+    <div class="header-right-icon header__icons{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header__icons--localization header-localization{% endif %}">
+      <div class="desktop-localization-wrapper">
+        {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
+          <localization-form class="small-hide medium-hide" data-prevent-hide>
+            {%- form 'localization', id: 'HeaderCountryForm', class: 'localization-form' -%}
+              <div>
+                <h2 class="visually-hidden" id="HeaderCountryLabel">{{ 'localization.country_label' | t }}</h2>
+                {%- render 'country-localization', localPosition: 'HeaderCountry' -%}
+              </div>
+            {%- endform -%}
+          </localization-form>
+        {% endif %}
+
+        {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+          <localization-form class="small-hide medium-hide" data-prevent-hide>
+            {%- form 'localization', id: 'HeaderLanguageForm', class: 'localization-form' -%}
+              <div>
+                <h2 class="visually-hidden" id="HeaderLanguageLabel">{{ 'localization.language_label' | t }}</h2>
+                {%- render 'language-localization', localPosition: 'HeaderLanguage' -%}
+              </div>
+            {%- endform -%}
+          </localization-form>
+        {%- endif -%}
+      </div>
+      {% render 'header-search', input_id: 'Search-In-Modal' %}
+
+      <a
+          href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
+          class="header__icon header__icon--account link focus-inset"
+          rel="nofollow"
+        >
+          {%- if section.settings.enable_customer_avatar -%}
+            <account-icon>
+              {%- if customer and customer.has_avatar? -%}
+                {{ customer | avatar }}
+              {%- else -%}
+                <span class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
+              {%- endif -%}
+            </account-icon>
+          {%- else -%}
+            <span class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
+          {%- endif -%}
+          <span class="visually-hidden">
+            {%- liquid
+              if customer
+                echo 'customer.account_fallback' | t
+              else
+                echo 'customer.log_in' | t
+              endif
+            -%}
+          </span>
+        </a>
+
+
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when '@app' -%}
+            {% render block %}
+        {%- endcase -%}
+      {%- endfor -%}
+
+      <div class="header-cart header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
+          {% if cart == empty %}
+            <span class="svg-wrapper">{{'icon-cart-empty.svg' | inline_asset_content }}</span>
+          {% else %}
+            <span class="svg-wrapper">{{'icon-cart.svg' | inline_asset_content }}</span>
+          {% endif %}
+        <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
+        {%- if cart != empty -%}
+          <div class="cart-count-bubble">
+            {%- if cart.item_count < 100 -%}
+              <span aria-hidden="true">{{ cart.item_count }}</span>
+            {%- endif -%}
+            <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </header>
+</{% if section.settings.sticky_header_type != 'none' %}sticky-header{% else %}div{% endif %}>
+
+{%- if settings.cart_type == "notification" -%}
+  {%- render 'cart-notification', color_scheme: section.settings.color_scheme, desktop_menu_type: section.settings.menu_type_desktop -%}
+{%- endif -%}
+
+{% javascript %}
+  class StickyHeader extends HTMLElement {
+    constructor() {
+      super();
+    }
+
+    connectedCallback() {
+      this.header = document.querySelector('.section-header');
+      this.headerIsAlwaysSticky = this.getAttribute('data-sticky-type') === 'always' || this.getAttribute('data-sticky-type') === 'reduce-logo-size';
+      this.headerBounds = {};
+
+      this.setHeaderHeight();
+
+      window.matchMedia('(max-width: 990px)').addEventListener('change', this.setHeaderHeight.bind(this));
+
+      if (this.headerIsAlwaysSticky) {
+        this.header.classList.add('shopify-section-header-sticky');
+      };
+
+      this.currentScrollTop = 0;
+      this.preventReveal = false;
+      this.predictiveSearch = this.querySelector('predictive-search');
+
+      this.onScrollHandler = this.onScroll.bind(this);
+      this.hideHeaderOnScrollUp = () => this.preventReveal = true;
+
+      this.addEventListener('preventHeaderReveal', this.hideHeaderOnScrollUp);
+      window.addEventListener('scroll', this.onScrollHandler, false);
+
+      this.createObserver();
+    }
+
+    setHeaderHeight() {
+      document.documentElement.style.setProperty('--header-height', `${this.header.offsetHeight}px`);
+    }
+
+    disconnectedCallback() {
+      this.removeEventListener('preventHeaderReveal', this.hideHeaderOnScrollUp);
+      window.removeEventListener('scroll', this.onScrollHandler);
+    }
+
+    createObserver() {
+      let observer = new IntersectionObserver((entries, observer) => {
+        this.headerBounds = entries[0].intersectionRect;
+        observer.disconnect();
+      });
+
+      observer.observe(this.header);
+    }
+
+    onScroll() {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (this.predictiveSearch && this.predictiveSearch.isOpen) return;
+
+      if (scrollTop > this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
+        this.header.classList.add('scrolled-past-header');
+        if (this.preventHide) return;
+        requestAnimationFrame(this.hide.bind(this));
+      } else if (scrollTop < this.currentScrollTop && scrollTop > this.headerBounds.bottom) {
+        this.header.classList.add('scrolled-past-header');
+        if (!this.preventReveal) {
+          requestAnimationFrame(this.reveal.bind(this));
+        } else {
+          window.clearTimeout(this.isScrolling);
+
+          this.isScrolling = setTimeout(() => {
+            this.preventReveal = false;
+          }, 66);
+
+          requestAnimationFrame(this.hide.bind(this));
+        }
+      } else if (scrollTop <= this.headerBounds.top) {
+        this.header.classList.remove('scrolled-past-header');
+        requestAnimationFrame(this.reset.bind(this));
+      }
+
+      this.currentScrollTop = scrollTop;
+    }
+
+    hide() {
+      if (this.headerIsAlwaysSticky) return;
+      this.header.classList.add('shopify-section-header-hidden', 'shopify-section-header-sticky');
+      this.closeMenuDisclosure();
+      this.closeSearchModal();
+    }
+
+    reveal() {
+      if (this.headerIsAlwaysSticky) return;
+      this.header.classList.add('shopify-section-header-sticky', 'animate');
+      this.header.classList.remove('shopify-section-header-hidden');
+    }
+
+    reset() {
+      if (this.headerIsAlwaysSticky) return;
+      this.header.classList.remove('shopify-section-header-hidden', 'shopify-section-header-sticky', 'animate');
+    }
+
+    closeMenuDisclosure() {
+      this.disclosures = this.disclosures || this.header.querySelectorAll('header-menu');
+      this.disclosures.forEach(disclosure => disclosure.close());
+    }
+
+    closeSearchModal() {
+      this.searchModal = this.searchModal || this.header.querySelector('details-modal');
+      this.searchModal.close(false);
+    }
+  }
+
+  customElements.define('sticky-header', StickyHeader);
+{% endjavascript %}
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    {% if settings.logo %}
+      "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
+    {% endif %}
+    "sameAs": [
+      {{ settings.social_twitter_link | json }},
+      {{ settings.social_facebook_link | json }},
+      {{ settings.social_pinterest_link | json }},
+      {{ settings.social_instagram_link | json }},
+      {{ settings.social_tiktok_link | json }},
+      {{ settings.social_tumblr_link | json }},
+      {{ settings.social_snapchat_link | json }},
+      {{ settings.social_youtube_link | json }},
+      {{ settings.social_vimeo_link | json }}
+    ],
+    "url": {{ request.origin | append: page.url | json }}
+  }
+</script>
+
+{%- if request.page_type == 'index' -%}
+  {% assign potential_action_target = request.origin | append: routes.search_url | append: "?q={search_term_string}" %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "name": {{ shop.name | json }},
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {{ potential_action_target | json }},
+        "query-input": "required name=search_term_string"
+      },
+      "url": {{ request.origin | append: page.url | json }}
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.header.name",
+  "class": "section-header",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "select",
+      "id": "logo_position",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "t:sections.header.settings.logo_position.options__2.label"
+        },
+        {
+          "value": "top-center",
+          "label": "t:sections.header.settings.logo_position.options__3.label"
+        },
+        {
+          "value": "middle-left",
+          "label": "t:sections.header.settings.logo_position.options__1.label"
+        },
+        {
+          "value": "middle-center",
+          "label": "t:sections.header.settings.logo_position.options__4.label"
+        }
+      ],
+      "default": "middle-left",
+      "label": "t:sections.header.settings.logo_position.label",
+      "info": "t:sections.header.settings.logo_help.content"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "t:sections.header.settings.menu.label"
+    },
+    {
+      "type": "select",
+      "id": "menu_type_desktop",
+      "options": [
+        {
+          "value": "dropdown",
+          "label": "t:sections.header.settings.menu_type_desktop.options__1.label"
+        },
+        {
+          "value": "mega",
+          "label": "t:sections.header.settings.menu_type_desktop.options__2.label"
+        },
+        {
+          "value": "drawer",
+          "label": "t:sections.header.settings.menu_type_desktop.options__3.label"
+        }
+      ],
+      "default": "dropdown",
+      "label": "t:sections.header.settings.menu_type_desktop.label",
+      "info": "t:sections.header.settings.menu_type_desktop.info"
+    },
+    {
+      "type": "select",
+      "id": "sticky_header_type",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.header.settings.sticky_header_type.options__1.label"
+        },
+        {
+          "value": "on-scroll-up",
+          "label": "t:sections.header.settings.sticky_header_type.options__2.label"
+        },
+        {
+          "value": "always",
+          "label": "t:sections.header.settings.sticky_header_type.options__3.label"
+        },
+        {
+          "value": "reduce-logo-size",
+          "label": "t:sections.header.settings.sticky_header_type.options__4.label"
+        }
+      ],
+      "default": "on-scroll-up",
+      "label": "t:sections.header.settings.sticky_header_type.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_line_separator",
+      "default": true,
+      "label": "t:sections.header.settings.show_line_separator.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header__1.content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color_scheme",
+      "id": "menu_color_scheme",
+      "label": "t:sections.header.settings.menu_color_scheme.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header__3.content",
+      "info": "t:sections.header.settings.header__4.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "default": false,
+      "label": "t:sections.header.settings.enable_country_selector.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header__5.content",
+      "info": "t:sections.header.settings.header__6.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "default": false,
+      "label": "t:sections.header.settings.enable_language_selector.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header__7.content",
+      "info": "t:sections.header.settings.header__7.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_customer_avatar",
+      "default": true,
+      "label": "t:sections.header.settings.enable_customer_avatar.label",
+      "info": "t:sections.header.settings.enable_customer_avatar.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.mobile_layout.content"
+    },
+    {
+      "type": "select",
+      "id": "mobile_logo_position",
+      "options": [
+        {
+          "value": "center",
+          "label": "t:sections.header.settings.mobile_logo_position.options__1.label"
+        },
+        {
+          "value": "left",
+          "label": "t:sections.header.settings.mobile_logo_position.options__2.label"
+        }
+      ],
+      "default": "center",
+      "label": "t:sections.header.settings.mobile_logo_position.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.header.settings.margin_bottom.label",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 36,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 36,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}
