@@ -23,11 +23,6 @@
         "info": "Logo hiển thị khi header trở thành sticky."
       },
       {
-        "type": "image_picker",
-        "id": "logo",
-        "label": "t:settings_schema.logo.settings.logo_image.label"
-      },
-      {
         "type": "range",
         "id": "logo_width",
         "min": 50,

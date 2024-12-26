@@ -61,13 +61,17 @@
 
 <div class="slideshow1">
   <div class="slideshow-group">
-    <video
-      autoplay
-      muted
-      loop
-      class="video-background">
-      <source src="https://cdn.shopify.com/videos/c/o/v/5457a4e3bfcb4ad88d30e68f7370fa14.mp4" type="video/mp4">
-    </video>
+    {% if section.settings.video %}
+      <video
+        autoplay
+        muted
+        loop
+        class="video-background">
+        <source src="{{ section.settings.video | file_url }}" type="video/mp4">
+      </video>
+    {% else %}
+      <p>Video not selected.</p>
+    {% endif %}
     <div class="item-group">
       <div class="slideshow-content">
         <p>WELCOME TO THE</p>
@@ -82,3 +86,22 @@
     </div>
   </div>
 </div>
+{% schema %}
+{
+  "name": "Slideshow Section",
+  "settings": [
+    {
+      "type": "url",
+      "id": "video",
+      "label": "Video URL"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "WELCOME TO THE CHRISTMAS ACADEMY"
+    }
+  ]
+}
+  {% endschema %}
+  

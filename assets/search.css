@@ -103,6 +103,7 @@ ul {
 
 .formsearch .search-searchbar .search-form .search-dropdown .dropdown-category .dropdown-category-items .dropdown-category-item a {
     font-size: 13px;
+    text-decoration: none;
 }
 
 .formsearch .search-searchbar .search-form .search-dropdown .dropdown-category .dropdown-category-items .dropdown-category-item {

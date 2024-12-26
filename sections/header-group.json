@@ -51,7 +51,12 @@
         "mobile_logo_position": "center",
         "margin_bottom": 0,
         "padding_top": 20,
-        "padding_bottom": 20
+        "padding_bottom": 20,
+        "main_menu": "main-menu",
+        "menu_item_1_image_1": "shopify://shop_images/ChristmasMenu_MensShirt_Short_370x230_2x_8a98347a-9c1f-42c5-97c5-62a374a58e2c.webp",
+        "menu_item_1_image_2": "shopify://shop_images/ChristmasMenu_WomensShirt_Short_370x230_2x_b8995d38-7a58-4c0f-86c0-fa370885887c.webp",
+        "menu_item_1_content": "MENS OUTFITTING FOR $150",
+        "menu_item_2_content": "WOMENS OUTFITTING FOR $150"
       }
     }
   },
