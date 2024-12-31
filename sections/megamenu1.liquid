@@ -1,0 +1,67 @@
+<!-- mega-menu.liquid -->
+{% comment %} <div class="dropdown-list">
+            <div class="dropdown-content">
+              <div class="megamenu-container">
+                {% render 'megamenu__links'
+                  , parent_handle: parent_handle %}
+                {% render 'megamenu__images'
+                  , parent_handle: parent_handle %}
+              </div>
+            </div>
+</div> {% endcomment %}
+<!-- mega-menu.liquid -->
+<!-- mega-menu.liquid -->
+<div class="dropdown-list">
+  <div class="dropdown-content">
+    <div class="megamenu-container">
+      {% render 'megamenu__links'
+        , parent_handle: parent_handle %}
+      {% render 'megamenu__images'
+        , parent_handle: parent_handle %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Custom Mega Menu",
+    "blocks": [
+      {
+        "type": "menu_item",
+        "name": "Menu Item",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Item Title"
+          },
+          {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Item Subtitle"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Item URL"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Item Image"
+          }, {
+            "type": "checkbox",
+            "id": "display",
+            "label": "Show this item?"
+          }
+        ]
+      }
+    ],
+    "max_blocks": 5,
+    "presets": [
+      {
+        "name": "Custom Mega Menu"
+      }
+    ]
+  }
+{% endschema %}

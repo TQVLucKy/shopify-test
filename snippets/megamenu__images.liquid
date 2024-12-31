@@ -1,0 +1,14 @@
+<div class="megamenu-img">
+  {% for block in section.blocks %}
+    {% if block.settings.display %}
+      <div class="megamenu-item">
+        <a href="{{ block.settings.url }}" class="megamenu-link">
+          {% if block.settings.image %}
+            <img src="{{ block.settings.image | img_url: 'medium' }}" alt="{{ block.settings.title }}">
+          {% endif %}
+          <h4>{{ block.settings.title }}</h4>
+        </a>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>

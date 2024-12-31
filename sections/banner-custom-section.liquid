@@ -67,7 +67,7 @@
         muted
         loop
         class="video-background">
-        <source src="{{ section.settings.video | file_url }}" type="video/mp4">
+        <source src="{{ section.settings.video}}" type="video/mp4">
       </video>
     {% else %}
       <p>Video not selected.</p>
@@ -87,21 +87,19 @@
   </div>
 </div>
 {% schema %}
-{
-  "name": "Slideshow Section",
-  "settings": [
-    {
-      "type": "url",
-      "id": "video",
-      "label": "Video URL"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Title",
-      "default": "WELCOME TO THE CHRISTMAS ACADEMY"
-    }
-  ]
-}
-  {% endschema %}
-  
+  {
+    "name": "Slideshow Section",
+    "settings": [
+      {
+        "type": "url",
+        "id": "video",
+        "label": "Video URL"
+      }, {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "WELCOME TO THE CHRISTMAS ACADEMY"
+      }
+    ]
+  }
+{% endschema %}

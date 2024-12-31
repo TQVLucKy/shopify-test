@@ -1,7 +1,7 @@
 .dropdown-list {
   display: flex;
   position: absolute; 
-  top: 80px;
+  top: 63px;
   left: 0;
   width: 100%;
   /* min-height: 550px; */
@@ -46,6 +46,7 @@
   margin: 20px 0;
   font-weight: bold;
   font-size: 1.2em;
+  white-space: nowrap;
 }
 .dropdown-list .dropdown-content .megamenu-list .megamenu-item .linklist {
   display: flex;
@@ -71,10 +72,12 @@
   margin-top: 25px;
 }
 .dropdown-list .dropdown-content  .megamenu-img .megamenu-img-content img {
-  max-width: 100%;
+  /* max-width: 100%; */
   height: auto;
 }
-.dropdown-list .dropdown-content  .megamenu-img .megamenu-img-content b {
+.dropdown-list .dropdown-content  .megamenu-img .megamenu-img-content h4 {
   margin: 10px;
   text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
 }

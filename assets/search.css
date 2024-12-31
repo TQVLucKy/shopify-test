@@ -196,10 +196,10 @@ ul {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* align-items: center; */
+    align-items: center;
     margin-bottom: 30px;
     max-width: 200px;
-    /* flex: 1 1 calc(calc(100% - 60px)/4); */
+    flex: 1 1 calc(calc(100% - 60px)/4);
 }
 
 @media screen and (min-width: 1200px) {

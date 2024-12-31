@@ -1,0 +1,14 @@
+{% for link in linklists[parent_handle].links %}
+  <div class="megamenu-item">
+    <a class="megamenu-item-title" href="{{ link.url }}">{{ link.title }}</a>
+    {% if link.links %}
+      <ul class="linklist">
+        {% for sublink in link.links %}
+          <li>
+            <a href="{{ sublink.url }}">{{ sublink.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+{% endfor %}

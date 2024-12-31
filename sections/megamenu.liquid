@@ -1,0 +1,91 @@
+{% schema %}
+  {
+    "name": "Custom Mega Menu",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "menu_item",
+        "name": "Menu Item",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Item Title"
+          },
+          {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Item Subtitle"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Item URL"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Item Image"
+          }, {
+            "type": "checkbox",
+            "id": "display",
+            "label": "Show this item?"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom Mega Menu",
+        "category": "Header"
+      }
+    ]
+  }
+{% endschema %}
+
+<div class="dropdown-list">
+  <div class="dropdown-content">
+    <!-- Mega Menu List -->
+    <div class="megamenu-list">
+      {% for level1 in links %}
+        <div class="megamenu-item">
+          <a class="megamenu-item-title" href="{{ level1.url }}">{{ level1.title }}</a>
+          {% assign level2 = level1.links %}
+          {% if level2.size > 0 %}
+            <ul class="linklist">
+              {% for level3 in level2 %}
+                <li>
+                  <a href="{{ level3.url }}">{{ level3.title }}</a>
+                  {% assign level3_links = level3.links %}
+                  {% if level3_links.size > 0 %}
+                    <ul>
+                      {% for level4 in level3_links %}
+                        <li>
+                          <a href="{{ level4.url }}">{{ level4.title }}</a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Mega Menu Images -->
+    <div class="megamenu-img">
+      {% for block in section.blocks %}
+        <div class="megamenu-item">
+          <a href="{{ block.settings.url }}" class="megamenu-link">
+            {% if block.settings.image %}
+              <img src="{{ block.settings.image | img_url: 'medium' }}" alt="{{ block.settings.title }}">
+            {% endif %}
+            <h4>{{ block.settings.title }}</h4>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

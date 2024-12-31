@@ -37,26 +37,75 @@
     },
     "header": {
       "type": "header",
+      "blocks": {
+        "menu_item_4tLCLd": {
+          "type": "menu_item",
+          "settings": {
+            "linked_handle": "gift-guide",
+            "title_1": "30% off accessories",
+            "image_1": "shopify://shop_images/Megamenu_25S7_370x230_2x_dd251f48-a54f-49c1-af54-452c994cec40.jpg",
+            "title_2": "It’s The Card That Counts",
+            "image_2": "shopify://shop_images/02_FEB_Megamenu_GiftCards_370x230_2x_f4afcd6a-d5c7-4808-b4b2-86ccc4623978.jpg",
+            "display": true
+          }
+        },
+        "menu_item_JCmhRi": {
+          "type": "menu_item",
+          "settings": {
+            "linked_handle": "kids",
+            "title_1": "30% Off All Rookie",
+            "image_1": "shopify://shop_images/BoxingDay_MenuTile_370x230_2x_5ec062fb-8288-4bc2-be61-0ef35f44922c.webp",
+            "title_2": "30% OFF SUMMER SHIRTS",
+            "image_2": "shopify://shop_images/ChristmasMenu_GiftsForRookies_370x230_2x_f17f5a63-bba6-4c71-bc72-57a8c7f91121.webp",
+            "display": true
+          }
+        },
+        "menu_item_HBY3Cf": {
+          "type": "menu_item",
+          "settings": {
+            "linked_handle": "womens",
+            "title_1": "30% off All Womens",
+            "image_1": "shopify://shop_images/BoxingDay_MenuTile_370x230_2x_5ec062fb-8288-4bc2-be61-0ef35f44922c.webp",
+            "title_2": "30% OFF SUMMER SETS",
+            "image_2": "shopify://shop_images/ChristmasMenu_GiftsForHimjpg_370x230_2x_ee3ab024-0438-4e7f-b997-7a51533948a4.webp",
+            "display": true
+          }
+        },
+        "menu_item_T4U39p": {
+          "type": "menu_item",
+          "settings": {
+            "linked_handle": "mens",
+            "title_1": "30% Off All Mens",
+            "image_1": "shopify://shop_images/BoxingDay_MenuTile_370x230_2x_5ec062fb-8288-4bc2-be61-0ef35f44922c.webp",
+            "title_2": "30% OFF SUMMER SHIRTS",
+            "image_2": "shopify://shop_images/ChristmasMenu_GiftsForHimjpg_370x230_2x_ee3ab024-0438-4e7f-b997-7a51533948a4.webp",
+            "display": true
+          }
+        },
+        "menu_item_H9Gfda": {
+          "type": "menu_item",
+          "settings": {
+            "linked_handle": "bundles",
+            "title_1": "30% OFF MENS",
+            "image_1": "shopify://shop_images/ChristmasMenu_WomensShirt_Short_370x230_2x_b8995d38-7a58-4c0f-86c0-fa370885887c.webp",
+            "title_2": "30% OFF WOMENS",
+            "image_2": "shopify://shop_images/ChristmasMenu_MensShirt_Short_370x230_2x_8a98347a-9c1f-42c5-97c5-62a374a58e2c.webp",
+            "display": true
+          }
+        }
+      },
+      "block_order": [
+        "menu_item_4tLCLd",
+        "menu_item_JCmhRi",
+        "menu_item_HBY3Cf",
+        "menu_item_T4U39p",
+        "menu_item_H9Gfda"
+      ],
       "settings": {
         "logo_position": "middle-left",
         "menu": "main-menu",
         "menu_type_desktop": "dropdown",
-        "sticky_header_type": "on-scroll-up",
-        "show_line_separator": true,
-        "color_scheme": "scheme-1",
-        "menu_color_scheme": "scheme-1",
-        "enable_country_selector": true,
-        "enable_language_selector": true,
-        "enable_customer_avatar": true,
-        "mobile_logo_position": "center",
-        "margin_bottom": 0,
-        "padding_top": 20,
-        "padding_bottom": 20,
-        "main_menu": "main-menu",
-        "menu_item_1_image_1": "shopify://shop_images/ChristmasMenu_MensShirt_Short_370x230_2x_8a98347a-9c1f-42c5-97c5-62a374a58e2c.webp",
-        "menu_item_1_image_2": "shopify://shop_images/ChristmasMenu_WomensShirt_Short_370x230_2x_b8995d38-7a58-4c0f-86c0-fa370885887c.webp",
-        "menu_item_1_content": "MENS OUTFITTING FOR $150",
-        "menu_item_2_content": "WOMENS OUTFITTING FOR $150"
+        "enable_mega_menu": false
       }
     }
   },

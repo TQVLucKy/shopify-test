@@ -161,12 +161,6 @@
     margin: 0 15px;  
 }
 }
-@media screen and (max-width: 1253px){
-  .header-left .header-list-left {
-    margin: 0 9px;  
-  }
-}
-
 .header-left .header-list-left .header-list-items{
   text-transform: uppercase;
   position:relative;
@@ -207,6 +201,11 @@
   .header .header-right a {
   padding: 0 10px;
     cursor:pointer;
+}
+@media screen and (max-width: 1253px){
+  .header .header-right a {
+    padding:0 ;  
+  }
 }
 .header-right{
   display: flex;
@@ -277,7 +276,49 @@
         
             {% assign submenu = linklists[link.handle] %}
             {% if submenu.links.size > 0 %}
-              {% include 'megamenu1', links: submenu.links, parent_title: link.title, parent_handle: link.handle %}
+              <div class="dropdown-list">
+                <div class="dropdown-content">
+                      <div class="megamenu-list ">
+                        {% for sublink in submenu.links %}
+                      <div class="megamenu-item">
+                        <a class="megamenu-item-title" href="{{ sublink.url }}">{{ sublink.title }}</a>
+                        {% if sublink.links %}
+                          <ul class="linklist">
+                            {% for subsub in sublink.links %}
+                              <li>
+                                <a href="{{ subsub.url }}">{{ subsub.title }}</a>
+                              </li>
+                            {% endfor %}
+                          </ul>
+                        {% endif %}
+                      </div>
+                    {% endfor %}
+                      </div>
+                      <div class="megamenu-img">
+                      {% for block in section.blocks %}
+                        {% if block.settings.linked_handle == link.handle and block.settings.display %}
+                          <div class="megamenu-img-content">
+                            <!-- First Image and Title -->
+                            <a href="{{ block.settings.url }}" class="megamenu-link">
+                              {% if block.settings.image_1 %}
+                                <img src="{{ block.settings.image_1 | img_url: 'medium' }}" alt="{{ block.settings.title_1 }}">
+                              {% endif %}
+                              <h4>{{ block.settings.title_1 }}</h4>
+                            </a>
+                          </div>
+                          <div class="megamenu-img-content">
+                            <a href="{{ block.settings.url }}" class="megamenu-link">
+                              {% if block.settings.image_2 %}
+                                <img src="{{ block.settings.image_2 | img_url: 'medium' }}" alt="{{ block.settings.title_2 }}">
+                              {% endif %}
+                              <h4>{{ block.settings.title_2 }}</h4>
+                            </a>
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  </div>
+              </div>
             {% endif %}
           </li>
         {% endfor %}
@@ -371,128 +412,34 @@
     {% endfor %}
   </div>
 </div>
-
-  <div class="dropdown-content">
-      <div class="dropdown-content-info">
-          <a>See 122 results for "jackets"</a>
-          <span
-              class="dropdown-content-icon"><svg
-                  viewBox="0 0 56 56"
-                  style="width: 14px;height: 14px;"
-                  xmlns="http://www.w3.org/2000/svg"><path
-                      d="M45.34 29.564l-25.785 25.785c-0.869 0.869-2.259 0.869-3.128 0l-5.768-5.768c-0.869-0.869-0.869-2.259 0-3.128l18.452-18.452-18.452-18.452c-0.869-0.869-0.869-2.259 0-3.128l5.768-5.768c0.869-0.869 2.259-0.869 3.128 0l25.785 25.785c0.869 0.869 0.869 2.259 0 3.128z"></path></svg></span>
-      </div>
-      <div class="dropdown-content-title">
-          <h4>Product Suggestions</h4>
-      </div>
-      <div
-          class="dropdown-content-results swiper">
-          <div class="swiper-wrapper">
-              <div
-                  class="content-result swiper-slide">    
-                  <img
-                      src="https://cdn.shopify.com/s/files/1/0004/3686/3040/files/QuincyJacket-AlmondTan_600x600.jpg?v=1710987482">
-                  <div class="result-details">
-                      <div
-                          class="result-details-title">Quince
-                          Jacket</div>
-                      <div
-                          class="product-item-price">$169.95</div>
-
-                  </div>
-              </div>
-              <div
-                  class="content-result swiper-slide">
-                  <img
-                      src="https://cdn.shopify.com/s/files/1/0004/3686/3040/files/QuincyJacket-AlmondTan_600x600.jpg?v=1710987482">
-                  <div class="result-details">
-                      <div
-                          class="result-details-title">Quince
-                          Jacket</div>
-                      <div
-                          class="product-item-price">$169.95</div>
-
-                  </div>
-              </div>
-              <div
-                  class="content-result swiper-slide">
-                  <img
-                      src="https://cdn.shopify.com/s/files/1/0004/3686/3040/files/QuincyJacket-AlmondTan_600x600.jpg?v=1710987482">
-                  <div class="result-details">
-                      <div
-                          class="result-details-title">Quince
-                          Jacket</div>
-                      <div
-                          class="product-item-price">$169.95</div>
-
-                  </div>
-              </div>
-              <div
-                  class="content-result swiper-slide">
-                  <img
-                      src="https://cdn.shopify.com/s/files/1/0004/3686/3040/files/QuincyJacket-AlmondTan_600x600.jpg?v=1710987482">
-                  <div class="result-details">
-                      <div
-                          class="result-details-title">Quince
-                          Jacket</div>
-                      <div
-                          class="product-item-price">$169.95</div>
-
-                  </div>
-              </div>
-              <div
-                  class="content-result swiper-slide">
-                  <img
-                      src="https://cdn.shopify.com/s/files/1/0004/3686/3040/files/QuincyJacket-AlmondTan_600x600.jpg?v=1710987482">
-                  <div class="result-details">
-                      <div
-                          class="result-details-title">Quince
-                          Jacket</div>
-                      <div
-                          class="product-item-price">$169.95</div>
-
-                  </div>
-              </div>
-              <div
-                  class="content-result swiper-slide">
-                  <img
-                      src="https://cdn.shopify.com/s/files/1/0004/3686/3040/files/QuincyJacket-AlmondTan_600x600.jpg?v=1710987482">
-                  <div class="result-details">
-                      <div
-                          class="result-details-title">Quince
-                          Jacket</div>
-                      <div
-                          class="product-item-price">$169.95</div>
-
-                  </div>
-              </div>
-              <div
-                  class="content-result swiper-slide">
-                  <img
-                      src="https://cdn.shopify.com/s/files/1/0004/3686/3040/files/QuincyJacket-AlmondTan_600x600.jpg?v=1710987482">
-                  <div class="result-details">
-                      <div
-                          class="result-details-title">Quince
-                          Jacket</div>
-                      <div
-                          class="product-item-price">$169.95</div>
-                  </div>
-              </div>
-              <div
-                  class="content-result swiper-slide">
-                  <img
-                      src="https://cdn.shopify.com/s/files/1/0004/3686/3040/files/QuincyJacket-AlmondTan_600x600.jpg?v=1710987482">
-                  <div class="result-details">
-                      <div
-                          class="result-details-title">Quince
-                          Jacket</div>
-                      <div
-                          class="product-item-price">$169.95</div>
-                  </div>
-              </div>
-            </div>
+<div class="dropdown-content">
+  <div class="dropdown-content-info">
+    <a>See {{ collections.all.products_count }} results</a>
+    <span class="dropdown-content-icon">
+      <svg viewBox="0 0 56 56" style="width: 14px;height: 14px;" xmlns="http://www.w3.org/2000/svg">
+        <path d="M45.34 29.564l-25.785 25.785c-0.869 0.869-2.259 0.869-3.128 0l-5.768-5.768c-0.869-0.869-0.869-2.259 0-3.128l18.452-18.452-18.452-18.452c-0.869-0.869-0.869-2.259 0-3.128l5.768-5.768c0.869-0.869 2.259-0.869 3.128 0l25.785 25.785c0.869 0.869 0.869 2.259 0 3.128z"></path>
+      </svg>
+    </span>
+  </div>
+  <div class="dropdown-content-title">
+    <h4>Product Suggestions</h4>
+  </div>
+  <div class="dropdown-content-results swiper">
+    <div class="swiper-wrapper">
+      {% for product in collections.all.products %}
+        <div class="content-result swiper-slide">
+          <img src="{{ product.featured_image | img_url: 'medium' }}" alt="{{ product.title }}">
+          <div class="result-details">
+            <div class="result-details-title">{{ product.title }}</div>
+            <div class="product-item-price">{{ product.price | money }}</div>
+          </div>
         </div>
+      {% endfor %}
     </div>
+  </div>
+</div>
+
+
   </div>
             </form>
         </div>
@@ -513,7 +460,7 @@
               <div class="header__heading-logo-wrapper">
                 <img src="{{ settings.logo_1 | img_url: '160x' }}" alt="{{ shop.name }}" class="header__heading-logo logo-default" width="160" height="auto" />
               
-                <img src="{{ settings.logo_2 | img_url: '160x' }}" alt="{{ shop.name }}" class="header__heading-logo logo-sticky" width="160" height="auto" />
+                <img src="{{ settings.logo_2 | img_url: '160x' }}" alt="{{ shop.name }}" class="header__heading-logo logo-sticky" width="160" height="auto" style="display: none;"/>
                 {% comment %} {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
                 {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
                 {% capture sizes %}(max-width: {{ settings.logo_width | times: 2 }}px) 50vw, {{ settings.logo_width }}px{% endcapture %}
@@ -859,10 +806,9 @@
   </script>
 {%- endif -%}
 {% schema %}
-{
+  {
   "name": "t:sections.header.name",
   "class": "section-header",
-  "max_blocks": 3,
   "settings": [
     {
       "type": "select",
@@ -923,169 +869,57 @@
       "info": "Select an image to display with the menu items."
     },
     {
-      "type": "select",
-      "id": "sticky_header_type",
-      "options": [
+      "type": "checkbox",
+      "id": "enable_mega_menu",
+      "label": "Enable Mega Menu",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu_item",
+      "name": "Menu Item",
+      "settings": [
         {
-          "value": "none",
-          "label": "t:sections.header.settings.sticky_header_type.options__1.label"
+          "type": "text",
+          "id": "linked_handle",
+          "label": "Linked Handle (Menu Item)"
         },
         {
-          "value": "on-scroll-up",
-          "label": "t:sections.header.settings.sticky_header_type.options__2.label"
+          "type": "text",
+          "id": "title_1",
+          "label": "Title 1"
         },
         {
-          "value": "always",
-          "label": "t:sections.header.settings.sticky_header_type.options__3.label"
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image 1"
         },
         {
-          "value": "reduce-logo-size",
-          "label": "t:sections.header.settings.sticky_header_type.options__4.label"
+          "type": "text",
+          "id": "title_2",
+          "label": "Title 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image 2"
+        },
+        {
+          "type": "checkbox",
+          "id": "display",
+          "label": "Show this item?",
+          "default": true
         }
-      ],
-      "default": "on-scroll-up",
-      "label": "t:sections.header.settings.sticky_header_type.label"
-    },
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
     {
-      "type": "checkbox",
-      "id": "show_line_separator",
-      "default": true,
-      "label": "t:sections.header.settings.show_line_separator.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.header.settings.header__1.content"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:sections.all.colors.label",
-      "default": "scheme-1"
-    },
-    {
-      "type": "color_scheme",
-      "id": "menu_color_scheme",
-      "label": "t:sections.header.settings.menu_color_scheme.label",
-      "default": "scheme-1"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.header.settings.header__3.content",
-      "info": "t:sections.header.settings.header__4.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_country_selector",
-      "default": false,
-      "label": "t:sections.header.settings.enable_country_selector.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.header.settings.header__5.content",
-      "info": "t:sections.header.settings.header__6.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_language_selector",
-      "default": false,
-      "label": "t:sections.header.settings.enable_language_selector.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.header.settings.header__7.content",
-      "info": "t:sections.header.settings.header__7.info"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_customer_avatar",
-      "default": true,
-      "label": "t:sections.header.settings.enable_customer_avatar.label",
-      "info": "t:sections.header.settings.enable_customer_avatar.info"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.header.settings.mobile_layout.content"
-    },
-    {
-      "type": "select",
-      "id": "mobile_logo_position",
-      "options": [
-        {
-          "value": "center",
-          "label": "t:sections.header.settings.mobile_logo_position.options__1.label"
-        },
-        {
-          "value": "left",
-          "label": "t:sections.header.settings.mobile_logo_position.options__2.label"
-        }
-      ],
-      "default": "center",
-      "label": "t:sections.header.settings.mobile_logo_position.label"
-    },
-    {
-      "type": "header",
-      "content": "t:sections.all.spacing"
-    },
-    {
-      "type": "range",
-      "id": "margin_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.header.settings.margin_bottom.label",
-      "default": 0
-    },
-    {
-      "type": "header",
-      "content": "t:sections.all.padding.section_padding_heading"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 36,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_top",
-      "default": 20
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 36,
-      "step": 4,
-      "unit": "px",
-      "label": "t:sections.all.padding.padding_bottom",
-      "default": 20
-    },
-    {
-      "type": "link_list",
-      "label": "Main Menu",
-      "id": "main_menu",
-      "default": "main-menu"
-    },
-    {
-      "type": "image_picker",
-      "label": "Image for Menu Item 1",
-      "id": "menu_item_1_image_1"
-    },
-    {
-      "type": "image_picker",
-      "label": "Image for Menu Item 1 - Second Image",
-      "id": "menu_item_1_image_2"
-    },
-    {
-      "type": "textarea",
-      "label": "Content for Menu Item 1",
-      "id": "menu_item_1_content"
-    },
-    {
-      "type": "textarea",
-      "label": "Content for Menu Item 2",
-      "id": "menu_item_2_content"
+      "name": "Custom Mega Menu"
     }
   ]
 }
+
 {% endschema %}
